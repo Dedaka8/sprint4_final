@@ -5,6 +5,8 @@ import org.junit.runners.Parameterized;
 import pageobject.MainPage;
 import pageobject.OrderPage;
 
+import static pageobject.constants.Buttons.MIDDLE_ORDER_BUTTON;
+
 @RunWith(Parameterized.class)
 public class CheckNewOrderTest extends BaseTest {
 
@@ -18,9 +20,10 @@ public class CheckNewOrderTest extends BaseTest {
     private final int orderScooterColor;
     private final String orderComment;
     private final boolean expectedResult;
+    private final String orderButton;
 
     public CheckNewOrderTest(String orderName, String orderSurname, String orderAddress, String orderPhone, String orderMetro,
-                             String orderDate, int orderRentPeriod, int orderScooterColor, String orderComment, boolean expectedResult) {
+                             String orderDate, int orderRentPeriod, int orderScooterColor, String orderComment, boolean expectedResult, String orderButton ) {
         this.orderName = orderName;
         this.orderSurname = orderSurname;
         this.orderAddress = orderAddress;
@@ -31,6 +34,7 @@ public class CheckNewOrderTest extends BaseTest {
         this.orderScooterColor = orderScooterColor;
         this.orderComment = orderComment;
         this.expectedResult = expectedResult;
+        this.orderButton = orderButton;
     }
 
     // Тестовые данные
@@ -38,18 +42,18 @@ public class CheckNewOrderTest extends BaseTest {
     public static Object[][] getCredentials() {
 
         return new Object[][]{
-                {"Иван", "Петров", "Москва", "+79175823483", "Сокольники", "15-10-2023", 1, 1,"Оставить у Вахтера", true },
-                {"Петр", "Смирнов", "Москва, Черкизовская д.5", "+79258841233", "Текстильщики", "16-10-2023", 3, 0, "", true },
+           //     {"Иван", "Петров", "Москва", "+79175823483", "Сокольники", "15-10-2023", 1, 1,"Оставить у Вахтера", true, MAINPAGE_HEADER_ORDER_BUTTON   },
+                {"Петр", "Смирнов", "Москва, Черкизовская д.5", "+79258841233", "Текстильщики", "16-10-2023", 3, 0, "", true, MIDDLE_ORDER_BUTTON},
         };
     }
 
     @Test
-    public void checkOrderStatusNotExistTes(){
+    public void checkNewOrder(){
 
        MainPage mainPage = new MainPage(driver);
        OrderPage orderPage = new OrderPage(driver);
 
-       mainPage.headerOrderButtonClick();
+       mainPage.orderButtonClick(orderButton);
        orderPage.setOrderName(orderName);
        orderPage.setOrderSurname(orderSurname);
        orderPage.setOrderAddress(orderAddress);
